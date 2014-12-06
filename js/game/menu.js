@@ -23,7 +23,7 @@ function Start(){
 
 	Choose({
 		"I have been following you.": twitter,
-		"We met yesterday.": function(){ metYesterday("ha ha! I am dave from last night")},
+		"We met yesterday.": function(){ $.myname = true; metYesterday("ha ha! I am dave from last night")},
 		"Wait, what is this game ?": About
 	});
 }
@@ -37,7 +37,7 @@ function backFromAbout()
 
 	Choose({
 	"I have been following you.": twitter,
-	"We met yesterday.": function(){ metYesterday("ha ha! I am dave from last night")},
+	"We met yesterday.": function(){$.myname = true; metYesterday("ha ha! I am dave from last night")},
 	});
 }
 
@@ -63,6 +63,7 @@ function twitter(){
 	Choose({
 	"We met yesterday..": function(){
 		$.twitter = true;
+		$.myname = true;
 		metYesterday("I am dave from Tash's birthday party");
 	},
 	"I'll be honest": function(){$.google = true;google()},
@@ -81,10 +82,12 @@ function google()
 	Choose({
 	"We met yesterday..": function(){
 		$.myHeight = true;
+		$.myname = true;
 		metYesterday("Tash's party!! I am dave, 5' 11 . dimple cheeks ? remember ?");
 	},
 	"We had burritos..": function(){
 		$.burrito = true;
+		$.myname = true;
 		metYesterday("dave here, we shared that awful burrito yesterday!!");
 	},
 	"I can see you": stalk,
@@ -99,6 +102,7 @@ function sorry(){
 	Choose({
 	"We met yesterday..": function(){
 		$.sorry = true;
+		$.myname = true;
 		metYesterday("ha ha! I am dave from last night");
 	},
 	"now I am a creep ?": creep,
@@ -145,7 +149,7 @@ function idk()
 		N("are you a freak ? I should runway from");
 		Choose({
 		"that depends": function(){
-			p("on what you remember from last night ?");
+			p("that depends on what do you remember from last night ?");
 			$.awkard = true;
 			memories();
 		},
@@ -156,6 +160,7 @@ function idk()
 			Wait(5000);
 			N("what else did I told you about");
 			N("This is so freaky, I never got this drunk before");
+			$.scared = true;
 			memories();
 		},
 		});
@@ -172,6 +177,7 @@ function idk()
 		},
 		"you checked already" : function() {
 			p("woah! that was fast! even for you ");
+			$.scared = true;
 			terminator("but i can sense, you use to like the old terminator a lot");
 		}
 		});
@@ -186,9 +192,14 @@ function idk()
 		N("No Shit !");
 		Choose({
 		"search your photos": function(){
-			$advise_photos = true;
+			p("try looking at your photos on mobile, I remember clicking few");
+			$.scared = true;
+			$.photos = true;
 		},
-		"talk about the new terminator"
+		"talk about the new terminator": function(){
+			$.t_sucks = true;
+			terminator("So, new terminator sucks, right ?")
+		}
 		});
 	}
 }
@@ -197,12 +208,13 @@ function terminator(message)
 {
 	p(message);
 	if($.seen_twitter)
-		n("but the next one..");
+		N("but the next one..");
+	if($.t_sucks)
+		N("Yes. Honestly");
 	N("It's gonna suck, would be another interstellar .. TIME is another dimension fuck up.BELIEVE ME.");
 	if(!$.memory)
 	{
 		N("But ... who are you , again ?");
-		p("mein hu don");
 	}
 	else
 	{
@@ -210,22 +222,157 @@ function terminator(message)
 		p("bored? i won't call it boring, you were very passionate about the cause");
 		p("HaHa");
 	}
+	memories();
 }
 
-function idk_last()
+function endGame()
 {
-
+	N("Sorry, I can't continue this anymore.");
+	if($.myname == true && $.myHeight == true)
+		N("Good Bye. short Dave");
+	else if($.myname == true)
+		N("Good Bye. Dave.");
+	else
+		N("Good Bye.");
+	if($.abuse)
+		N("Burn in hell");
+	else
+		N("Enjoy your life");
+	j("GAME OVER for you bro! Better luck next time.");
 }
 
 function memories()
 {
 	j("you got her thinking about the party");
 	if($.awkard)
-		j("but you are acting ALL creepy and mysterious");
-	j("don't blow this");
+		j("but that last sentence didn't help");
+	if($.scared)
+	{
+		j("yes, get her scared that will help.");
+		j("[[SARCASM intended]]");
+	}
 
+	j("PS: don't blow this");
+	j("PS: , Girls like assertive men");
+	p("take your time, see what you remember");
 	if($.awkard)
 	{
-		N("You are scaring me!")
+		N("did we did something stupid");
+		Wait(100);
+		N("NO");
+		N("I remember coming home alone");
+		Choose({
+		"yes yes you were alone": function(){
+			p("oh god! No. it never went that far");
+		},
+		"sadly, but .." : function(){
+			p("sadly, but I was hoping we could change that tonight");
+			j("Dude, so not cool");
+			j("I am trying to help you here");
+			Wait(1000);
+			j("you would be lucky if she replies .. wait");
+			Wait(10000);
+			endGame();
+		}
+		});
 	}
+	if($.scared)
+	{
+		$TEA = true;
+		N("did I mention T.P.P");
+		p("No, nothing like that");
+		Choose({
+			"don't be scared": function(){
+				p("don't be scared, you were cool");
+			},
+			"nah! but you did mentioned P.M.S" : function(){
+				p("nah! but you did mentioned P.M.S");
+				j("Dude, so not cool");
+				j("I am trying to help you here");
+				Wait(1000);
+				j("You would be lucky if she replies .. wait");
+				Wait(10000);
+				N("sorry about that. ruff days you see.");
+			}
+			"yes, you did" : function(){
+				p("you kindda did, but I promise to keep it a secret");
+				N("SHIT! SHIT! SHIT! we need to meet");
+				j("That was 1 way out");
+				j("Now you can also kidnap her, right ? fool.");
+				j("Telling lies and shit. ");
+				j("Liam Neeson, will take care of you");
+			}
+			});
+	}
+	N("I was looking at yesterday's photos");
+	if($.photos)
+	{
+		N("like you suggested");
+	}
+	if($.myHeight)
+	{
+		N("you were in red shirt.");
+	}
+	else
+	{
+		N("forgive me, but are the cute one or the other one ?");
+		Choose({
+			"cute one of course": function(){
+				p("ya! In that green shirt. That's me");
+				j("lying, not cool");
+				j("lets see where you take this");
+				if($.google)
+				{
+					N("Liar! I know nerds like you");
+					$.abuse = true;
+					endGame();
+				}
+				if($.twitter)
+				{
+					N("hmm..")
+				}
+			},
+			"my mom thinks I am cute" : function(){
+				p("you were a nicer person yesterday");
+				p("but, I can assure you, my mom thinks I am cute");
+				Wait(100);
+				mom();
+			},
+			"well you said I was alright" : function(){
+				
+			}
+			});
+	}
+}
+
+
+function mom()
+{
+	N("you still live with your mom ?");
+	Choose({
+		"yes, of course I am 17" : function(){
+			p("yes, of course I am 17")
+			j("You are not even of age");
+			j("Ha Ha");
+			j("Kiddo");
+			j("I'll still look out for you");
+			Wait(1000);
+			endGame();
+			j("I tried.Sorry");
+		},
+		"she needs me, can't move much" : function(){
+			p("She has a medical thing");
+			p("Can't maneuver much");
+			p("But she's cool");
+			Choose({
+				"she would love to meet you":function(){
+					p("She would love to meet you")
+					endGame();
+				},
+				"say nothing at all" : function(){
+					p("nevermind..");
+				}
+			})
+		}
+	});
 }
