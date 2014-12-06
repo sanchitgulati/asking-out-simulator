@@ -49,14 +49,15 @@ function About(){
 	
 	p("Of course. I see you have expertise in the matter.");
 	j("Ha, of course.");
-	j("I am Sanchit Gulati, and this code is stolen from ncase");
+	j("I am Sanchit Gulati, and this framework is from ncase");
 	j("who made the famous 'Coming Out Simulator 2014' ");
 	j("now lets get back to the game. Best Of Luck.");
 	backFromAbout();
 }
 
 function twitter(){
-	p("I have been following you on twitter.");
+	p("I have been following you");
+	p("on twitter :P");
 	p("I am @t3rm1nat0r");
 	N("weirdo :S");
 	N("How did you get this number ?");
@@ -77,16 +78,18 @@ function google()
 	p("that ice bucket challenge vlog was interesting");
 	N("**** off");
 	j("You are not very good at this are you");
-	Wait(100);
 	j("bring it back, last chance");
 	Choose({
 	"We met yesterday..": function(){
 		$.myHeight = true;
 		$.myname = true;
+		$.twitter = true;
+		$.memory = true;
 		metYesterday("Tash's party!! I am dave, 5' 11 . dimple cheeks ? remember ?");
 	},
 	"We had burritos..": function(){
 		$.burrito = true;
+		$.twitter = true;
 		$.myname = true;
 		metYesterday("dave here, we shared that awful burrito yesterday!!");
 	},
@@ -116,7 +119,12 @@ function creep(){
 		p("you had no problem with me or my computer yesterday");
 		idk();
 	}
-
+	else
+	{
+		$.TEA = true;
+		p("yesterday with you and your T.P.P shit");
+		teaEnd();
+	}
 }
 
 function stalk(){
@@ -134,9 +142,9 @@ function stalk(){
 function metYesterday(message){
 	$.yesterday = true;
 	p(message);
-	Wait(5000);
+	Wait(500);
 	N("oh!");
-	Wait(5000);
+	Wait(500);
 	idk();
 }
 
@@ -144,30 +152,10 @@ function metYesterday(message){
 function idk()
 {
 	N("yesterday ?");
-	if($.google)
-	{
-		N("are you a freak ? I should runway from");
-		Choose({
-		"that depends": function(){
-			p("that depends on what do you remember from last night ?");
-			$.awkard = true;
-			memories();
-		},
-		"dont be stupid .. I am lying": function(){
-			p("just lying, I was just teasing you");
-			p("you were talking on and on about some ex who stalked");
-			p("so.. just a prank");
-			Wait(5000);
-			N("what else did I told you about");
-			N("This is so freaky, I never got this drunk before");
-			$.scared = true;
-			memories();
-		},
-		});
-	}
+
 	if($.twitter)
 	{
-		Wait(5000);
+		Wait(500);
 		N("okie, you are not @t3rm1nat0r");
 		N("no one with that id follows me");
 		Choose({
@@ -178,13 +166,47 @@ function idk()
 		"you checked already" : function() {
 			p("woah! that was fast! even for you ");
 			$.scared = true;
-			terminator("but i can sense, you use to like the old terminator a lot");
+			terminator("but I can sense, you use to like the old terminator a lot");
+		}
+		});
+	}
+	else{
+		ifgoogle();
+	}
+}
+
+function ifgoogle(){
+	if($.google)
+	{
+		N("you also googled me.");
+		N("Are you a freak ? I should runway from");
+		Choose({
+		"that depends": function(){
+			p("that depends on what do you remember from last night ?");
+			$.awkard = true;
+			memories();
+		},
+		"dont be stupid .. I am lying": function(){
+			p("just lying, I was just teasing you");
+			p("you were talking on and on about some ex who stalked");
+			p("so.. just a prank");
+			Wait(500);
+			N("what else did I told you about");
+			N("This is so freaky, I never got this drunk before");
+			$.scared = true;
+			memories();
 		}
 		});
 	}
 	else
 	{
-		Wait(5000);
+		cont();
+	}
+}
+
+function cont(){
+
+		Wait(500);
 		N("still hungover ! sorry!");
 		N("who are you!");
 		p("I was afraid this would happen");
@@ -202,17 +224,16 @@ function idk()
 			terminator("So, new terminator sucks, right ?")
 		},
 		"ask her out": function(){
-			$jackDaniels = true;
+			$.jackDaniels = true;
 			askherout();
 		}
 		});
-	}
 }
 
 function terminator(message)
 {
 	p(message);
-	if($.seen_twitter)
+	if(!$.seen_twitter)
 		N("but the next one..");
 	if($.t_sucks)
 		N("Yes. Honestly");
@@ -227,7 +248,7 @@ function terminator(message)
 		p("bored? i won't call it boring, you were very passionate about the cause");
 		p("HaHa");
 	}
-	memories();
+	ifgoogle();
 }
 
 function endGame()
@@ -240,7 +261,11 @@ function endGame()
 	else
 		N("Good Bye.");
 	if($.abuse)
+	{
 		N("Burn in hell");
+		if($.burrito)
+			N("Take that burrito in your ass while you are at it");
+	}
 	else
 		N("Enjoy your life");
 	j("GAME OVER for you bro! Better luck next time.");
@@ -249,15 +274,15 @@ function endGame()
 function memories()
 {
 	if($.awkard)
-		j("but that last sentence didn't help");
+		j("and this isn't helping");
 	if($.scared)
 	{
 		j("yes, get her scared that will help.");
 		j("[[SARCASM intended]]");
 	}
 
-	j("PS: don't blow this");
-	j("PS: , Girls like assertive men");
+	j("PS: Don't blow this");
+	j("PS: Girls like assertive men");
 	p("take your time, see what you remember");
 	if($.awkard)
 	{
@@ -268,21 +293,22 @@ function memories()
 		Choose({
 		"yes yes you were alone": function(){
 			p("oh god! No. it never went that far");
+			askherout();
 		},
 		"sadly, but .." : function(){
 			p("sadly, but I was hoping we could change that tonight");
 			j("Dude, so not cool");
 			j("I am trying to help you here");
-			Wait(1000);
+			Wait(100);
 			j("you would be lucky if she replies .. wait");
-			Wait(10000);
+			Wait(1000);
 			endGame();
 		}
 		});
 	}
 	else if($.scared)
 	{
-		$TEA = true;
+		$.TEA = true;
 		N("did I mention T.P.P");
 		p("No, nothing like that");
 		Choose({
@@ -294,20 +320,15 @@ function memories()
 				p("nah! but you did mentioned P.M.S");
 				j("Dude, so not cool");
 				j("I am trying to help you here");
-				Wait(1000);
+				Wait(100);
 				j("You would be lucky if she replies .. wait");
-				Wait(10000);
+				Wait(1000);
 				N("sorry about that. ruff days you see.");
 				cuteornot();
 			},
 			"yes, you did " : function(){
 				p("you kindda did, but I promise to keep it a secret");
-				N("SHIT! SHIT! SHIT! we need to meet");
-				j("That was 1 way out");
-				j("Now you can also kidnap her, right ? fool.");
-				j("Telling lies and shit. ");
-				j("Liam Neeson, will take care of you");
-				j("GAME OVER");
+				teaEnd();
 
 			}
 			});
@@ -316,6 +337,16 @@ function memories()
 	{
 		cuteornot();
 	}
+}
+
+function teaEnd()
+{
+	N("SHIT! SHIT! SHIT! we need to meet");
+	j("That was 1 way out");
+	j("Now you can also kidnap her, right ? fool.");
+	j("Telling lies and shit. ");
+	j("Liam Neeson, will take care of you");
+	j("GAME OVER");
 }
 
 function cuteornot()
@@ -328,6 +359,7 @@ function cuteornot()
 	if($.myHeight)
 	{
 		N("you were in red shirt.");
+		askherout();
 	}
 	else
 	{
@@ -343,9 +375,15 @@ function cuteornot()
 				$.abuse = true;
 				endGame();
 			}
-			if($.twitter)
+			else if($.twitter)
 			{
-				N("hmm..")
+				$.lair = true;
+				N("hmm..");
+				askherout();
+			}
+			else
+			{
+				askherout();
 			}
 		},
 		"my mom thinks I am cute" : function(){
@@ -381,26 +419,29 @@ function askherout()
 	p("you wanna go out for ..");
 	Choose({
 		"coffee": function(){
-			$dateType = 0;
+			$.dateType = 0;
 			p("some coffee");
+			reaction();
 		},
 		"drinks": function(){
 			$.dateType = 1;
 			p("pints of beer");
+			reaction();
 		},
 		"movies":function(){
 			$.dateType = 2;
 			if($.seen_twitter)
 				p("the new Hobbit movie");
 			else
-				p("the new Jennifer Aniston movie");
+				p("the new jennifer aniston movie");
+			reaction();
 		},
 		"brunch": function(){
 			$.dateType = 3;
 			p("some brunch");
+			reaction();
 		}
 	})
-	reaction();
 }
 
 function reaction()
@@ -419,8 +460,15 @@ function reaction()
 				if($.pity)
 				{
 					N("Sure, a coffee can't hurt");
+					if($.lair)
+						N("Even if you are a lair");
 					N("and you can tell all about yesterday");
 					gameWin();
+				}
+				else
+				{
+					N("Sorry, last night was a mistake");
+					endGame();
 				}
 				break;
 			}
@@ -443,10 +491,19 @@ function reaction()
 							"let me know if I can join": function(){
 								p("I am new here");
 								p("Let me know if I can join");
-								N("sure, i would confirm with my friends");
-								j("FRIENDZONED");
-								$.friend = true;
-								gameWin();
+								if($.lair)
+								{
+									N("I don't trust a thing you say.lair");
+									$.abuse = true;
+									endGame();
+								}
+								else
+								{
+									N("sure thing, i would confirm with my friends");
+									j("FRIENDZONED");
+									$.friend = true;
+									gameWin();
+								}
 							},
 							"good for you" : function(){
 								p("Have fun");
@@ -475,6 +532,7 @@ function reaction()
 					else
 					{
 						N("Nah! I rest and cure this hangover of mine");
+						tryAgain();
 					}
 				}
 			}
@@ -520,7 +578,7 @@ function mom()
 			j("Ha Ha");
 			j("Kiddo");
 			j("I'll still look out for you");
-			Wait(1000);
+			Wait(100);
 			endGame();
 			j("I tried.Sorry");
 		},
@@ -548,6 +606,6 @@ function gameWin()
 	j("GAME OVER");
 	j("You Survived.");
 	if($.friend)
-		j("As a friend dumb ass").
-	j("good luck coming back from here").
+		j("As a friend dumb ass");
+	j("good luck coming back from here");
 }
