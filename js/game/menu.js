@@ -437,7 +437,7 @@ function reaction()
 				{
 					if($.seen_twitter)
 					{
-						N("That comes out in 3 weeks dumbo");
+						N("That comes out in next week dumbo");
 						N("also, already made plans with some friends");
 						Choose({
 							"let me know if I can join": function(){
@@ -462,21 +462,31 @@ function reaction()
 					else
 					{
 						N("Nah! I rest and cure this hangover of mine");
+						endGame();
 					}
 				}
 				else
 				{
 					if($.seen_twitter)
 					{
-						N("That comes out in 3 weeks dumbo");
-						tryAgain();
+						N("you are making plans 1 week in advance");
+						endGame();
 					}
 					else
 					{
 						N("Nah! I rest and cure this hangover of mine");
 					}
 				}
-
+			}
+			case 3:
+			{
+				if($.photos)
+				{
+					N("your photos were strange");
+				}
+				N("oh! you are gay");
+				N("Sorry i didn't knew");
+				endGame();
 			}
 		}
 	}
