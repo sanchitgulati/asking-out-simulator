@@ -1,7 +1,7 @@
 function Start(){
 
 	$ = {};
-	
+	$.count = 0;
 	/////// SET UP SCENE ////////
 
 	Show("background","coffeehouse");
@@ -23,7 +23,7 @@ function Start(){
 
 	Choose({
 		"I have been following you.": twitter,
-		"We met yesterday.": function(){ $.myname = true; metYesterday("ha ha! I am dave from last night")},
+		"We met yesterday.": function(){ $.myname = true; metYesterday("I am dave from last night")},
 		"Wait, what is this game ?": About
 	});
 }
@@ -191,14 +191,19 @@ function idk()
 		p("You drank a lot, yesterday");
 		N("No Shit !");
 		Choose({
-		"search your photos": function(){
+		"ask her to search for photos": function(){
 			p("try looking at your photos on mobile, I remember clicking few");
 			$.scared = true;
 			$.photos = true;
+			memories();
 		},
 		"talk about the new terminator": function(){
 			$.t_sucks = true;
 			terminator("So, new terminator sucks, right ?")
+		},
+		"ask her out": function(){
+			$jackDaniels = true;
+			askherout();
 		}
 		});
 	}
@@ -243,7 +248,6 @@ function endGame()
 
 function memories()
 {
-	j("you got her thinking about the party");
 	if($.awkard)
 		j("but that last sentence didn't help");
 	if($.scared)
@@ -257,7 +261,7 @@ function memories()
 	p("take your time, see what you remember");
 	if($.awkard)
 	{
-		N("did we did something stupid");
+		N("did we did something stupid ??");
 		Wait(100);
 		N("NO");
 		N("I remember coming home alone");
@@ -276,7 +280,7 @@ function memories()
 		}
 		});
 	}
-	if($.scared)
+	else if($.scared)
 	{
 		$TEA = true;
 		N("did I mention T.P.P");
@@ -284,6 +288,7 @@ function memories()
 		Choose({
 			"don't be scared": function(){
 				p("don't be scared, you were cool");
+				cuteornot();
 			},
 			"nah! but you did mentioned P.M.S" : function(){
 				p("nah! but you did mentioned P.M.S");
@@ -293,6 +298,7 @@ function memories()
 				j("You would be lucky if she replies .. wait");
 				Wait(10000);
 				N("sorry about that. ruff days you see.");
+				cuteornot();
 			},
 			"yes, you did " : function(){
 				p("you kindda did, but I promise to keep it a secret");
@@ -301,9 +307,19 @@ function memories()
 				j("Now you can also kidnap her, right ? fool.");
 				j("Telling lies and shit. ");
 				j("Liam Neeson, will take care of you");
+				j("GAME OVER");
+
 			}
 			});
 	}
+	else
+	{
+		cuteornot();
+	}
+}
+
+function cuteornot()
+{
 	N("I was looking at yesterday's photos");
 	if($.photos)
 	{
@@ -317,34 +333,172 @@ function memories()
 	{
 		N("forgive me, but are the cute one or the other one ?");
 		Choose({
-			"cute one of course": function(){
-				p("ya! In that green shirt. That's me");
-				j("lying, not cool");
-				j("lets see where you take this");
-				if($.google)
-				{
-					N("Liar! I know nerds like you");
-					$.abuse = true;
-					endGame();
-				}
-				if($.twitter)
-				{
-					N("hmm..")
-				}
-			},
-			"my mom thinks I am cute" : function(){
-				p("you were a nicer person yesterday");
-				p("but, I can assure you, my mom thinks I am cute");
-				Wait(100);
-				mom();
-			},
-			"well you said I was alright" : function(){
-				
+		"cute one of course": function(){
+			p("ya! In that green shirt. That's me");
+			j("lying, not cool");
+			j("lets see where this gets you");
+			if($.google)
+			{
+				N("Liar! I know nerds like you");
+				$.abuse = true;
+				endGame();
 			}
-			});
+			if($.twitter)
+			{
+				N("hmm..")
+			}
+		},
+		"my mom thinks I am cute" : function(){
+			p("you were a nicer person yesterday");
+			p("but, I can assure you, my mom thinks I am cute");
+			Wait(100);
+			mom();
+		},
+		"well you said I was alright" : function(){
+			p("this is sad");
+			p("you thought I was funny");
+			Choose({
+				"[you felt bad]":function(){
+					p("go **** yourself");
+					j("having fake self esteem, are we ?");
+					j("GAME OVER");
+				},
+				"[she wasn't the first calling you ugly]" : function(){
+					p("I get that a lot, welcome to the club");
+					N("don't get me wrong");
+					N("I am sure, you are a lovely person");
+					$.pity = true;
+					askherout();
+				}
+			})
+		}
+		});
 	}
 }
 
+function askherout()
+{
+	p("you wanna go out for ..");
+	Choose({
+		"coffee": function(){
+			$dateType = 0;
+			p("some coffee");
+		},
+		"drinks": function(){
+			$.dateType = 1;
+			p("pints of beer");
+		},
+		"movies":function(){
+			$.dateType = 2;
+			if($.seen_twitter)
+				p("the new Hobbit movie");
+			else
+				p("the new Jennifer Aniston movie");
+		},
+		"brunch": function(){
+			$.dateType = 3;
+			p("some brunch");
+		}
+	})
+	reaction();
+}
+
+function reaction()
+{
+	if($.jackDaniels)
+	{
+		endGame();
+	}
+	else
+	{
+		$.count ++;
+		switch($.dateType)
+		{
+			case 0:
+			{
+				if($.pity)
+				{
+					N("Sure, a coffee can't hurt");
+					N("and you can tell all about yesterday");
+					gameWin();
+				}
+				break;
+			}
+			case 1:
+			{
+				N("With his hangover ?");
+				N("Are you kidding");
+				tryAgain();
+				break;
+			}
+			case 2:
+			{
+				if($.pity)
+				{
+					if($.seen_twitter)
+					{
+						N("That comes out in 3 weeks dumbo");
+						N("also, already made plans with some friends");
+						Choose({
+							"let me know if I can join": function(){
+								p("I am new here");
+								p("Let me know if I can join");
+								N("sure, i would confirm with my friends");
+								j("FRIENDZONED");
+								$.friend = true;
+								gameWin();
+							},
+							"good for you" : function(){
+								p("Have fun");
+								tryAgain();
+							},
+							"ah! that's sad, jennifer aniston then" : function(){
+								p("ah! that's sad");
+								p("what about the jennifer aniston movie this week");
+								endGame();
+							}
+						})
+					}
+					else
+					{
+						N("Nah! I rest and cure this hangover of mine");
+					}
+				}
+				else
+				{
+					if($.seen_twitter)
+					{
+						N("That comes out in 3 weeks dumbo");
+						tryAgain();
+					}
+					else
+					{
+						N("Nah! I rest and cure this hangover of mine");
+					}
+				}
+
+			}
+		}
+	}
+
+}
+
+function tryAgain()
+{
+	p("Sorry about that");
+	p("very unconsiderate of me");
+	if($.count >= 2)
+	{
+		N("you are desperate aren't you");
+		$.abuse = true;
+		endGame();
+	}
+	else{
+		p("Let me try again");
+		p("so ..");
+		askherout();
+	}
+}
 
 function mom()
 {
@@ -371,8 +525,19 @@ function mom()
 				},
 				"say nothing at all" : function(){
 					p("nevermind..");
+					$.pity = true;
+					askherout();
 				}
 			})
 		}
 	});
+}
+
+function gameWin()
+{
+	j("GAME OVER");
+	j("You Survived.");
+	if($.friend)
+		j("As a friend dumb ass").
+	j("good luck coming back from here").
 }
