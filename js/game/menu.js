@@ -293,8 +293,8 @@ function memories()
 				j("You would be lucky if she replies .. wait");
 				Wait(10000);
 				N("sorry about that. ruff days you see.");
-			}
-			"yes, you did" : function(){
+			},
+			"yes, you did " : function(){
 				p("you kindda did, but I promise to keep it a secret");
 				N("SHIT! SHIT! SHIT! we need to meet");
 				j("That was 1 way out");
